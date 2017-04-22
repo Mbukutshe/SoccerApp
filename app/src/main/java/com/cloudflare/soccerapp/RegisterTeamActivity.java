@@ -8,15 +8,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterTeamActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button Cancel, AddTeamMembers, Date;
     EditText editTeamName, editTeamCaptain, editChairman, editFounded;
     private int mYear, mMonth, mDay;
-
+    RequestQueue requestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +52,36 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         AddTeamMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterTeamActivity.this, TeamMembersActivity.class);
-                startActivity(intent); //onclick takes you to TeamMemberActivity.java
+                String url = "http://soccer.payghost.co.za/teamdata.php";
+                StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Intent intent = new Intent(RegisterTeamActivity.this, TeamMembersActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams(){
+                        Map<String,String> parameters = new HashMap<String, String>();
+                        parameters.put("Name",editTeamName.getText().toString());
+                        parameters.put("Captain",editTeamCaptain.getText().toString());
+                        parameters.put("Chairman",editTeamCaptain.getText().toString());
+                        parameters.put("Date",editFounded.getText().toString());
+                        return parameters;
+                    }
+                };
+                request.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                requestQueue.add(request);
+
 
             }
         });

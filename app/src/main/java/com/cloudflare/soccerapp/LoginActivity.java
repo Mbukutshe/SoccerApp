@@ -13,6 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,6 +31,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.R.attr.button;
 import static android.R.attr.editTextBackground;
@@ -36,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Button Submit, Cancel;
     EditText username, password;
+    RequestQueue requestQueue;
 
 
     @Override
@@ -63,10 +74,44 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AsyncLogin().execute(username.getText().toString(),password.getText().toString());
+                //login
+               /*ProgressDialog progress = null;
+                progress =  ProgressDialog.show(getApplicationContext(),null,"Authenticating...",true);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                    }
+                }).start();*/
+                String url = "http://soccer.payghost.co.za/login.inc.php";
+                StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Intent intent = new Intent(LoginActivity.this,RegisterTeamActivity.class);
+                        startActivity(intent);
+                    }
+                },new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams(){
+                        Map<String,String> parameters = new HashMap<String, String>();
+                        parameters.put("username",username.getText().toString());
+                        parameters.put("password",password.getText().toString());
+                        return parameters;
+                    }
+                };
+                request.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                requestQueue.add(request);
             }
         });
+
 
     }private class AsyncLogin extends AsyncTask<String, String, String>
     {
