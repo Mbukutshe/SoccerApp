@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,PostsActivity.class);
                 startActivity(intent); //onclick takes you to postsActivity.java
+
+
             }
         });
     }

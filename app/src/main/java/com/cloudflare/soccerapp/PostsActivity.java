@@ -35,6 +35,14 @@ public class PostsActivity extends AppCompatActivity {
                 startActivityForResult(cameraIntent, CAMERA_REQUEST); //accessing camera
             }
         });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
