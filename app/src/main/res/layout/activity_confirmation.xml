@@ -9,11 +9,11 @@ tools:context="com.cloudflare.soccerapp.MainActivity">
 
 <Button
     android:id="@+id/btnStart"
+    android:background="@drawable/button_background"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_marginLeft="76dp"
-    android:layout_marginStart="76dp"
+    android:gravity="center"
+    android:layout_centerHorizontal="true"
     android:text="Start" />
 </RelativeLayout>
