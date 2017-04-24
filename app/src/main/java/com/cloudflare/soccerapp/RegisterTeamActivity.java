@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -27,6 +29,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
     Button Cancel, AddTeamMembers, Date;
     EditText editTeamName, editTeamCaptain, editChairman, editFounded;
     private int mYear, mMonth, mDay;
+    Spinner spinner;
     RequestQueue requestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +40,13 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         editTeamCaptain = (EditText) findViewById(R.id.editTeamCaptain);
         editChairman = (EditText) findViewById(R.id.editChairman);
         editFounded = (EditText) findViewById(R.id.editFounded);
+        spinner = (Spinner) findViewById(R.id.spinner);
+
 
         Cancel = (Button) findViewById(R.id.btnCancel);
         AddTeamMembers = (Button) findViewById(R.id.btnAddTeamMembers);
         Date = (Button) findViewById(R.id.btnDate);
+
 
         Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
