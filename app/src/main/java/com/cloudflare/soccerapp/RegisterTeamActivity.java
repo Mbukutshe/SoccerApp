@@ -47,6 +47,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         AddTeamMembers = (Button) findViewById(R.id.btnAddTeamMembers);
         Date = (Button) findViewById(R.id.btnDate);
 
+
         Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
