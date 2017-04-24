@@ -113,7 +113,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-    }private class AsyncLogin extends AsyncTask<String, String, String>
+    }
+    private class AsyncLogin extends AsyncTask<String, String, String>
     {
         ProgressDialog pdLoading = new ProgressDialog(LoginActivity.this);
         HttpURLConnection conn;
