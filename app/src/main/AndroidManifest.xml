@@ -23,7 +23,6 @@
         </activity>
         <activity android:name=".RegisterTeamActivity" />
         <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".TeamMembersActivity" />
         <activity android:name=".LeagueActivity" />
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".LoginActivity" />

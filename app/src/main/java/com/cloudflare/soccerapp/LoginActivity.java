@@ -82,20 +82,23 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
 
                     }
+
                 }).start();*/
-                String url = "http://soccer.payghost.co.za/login.inc.php";
+
+                String url = "https://soccer.payghost.co.za/login.inc.php";
                 StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response)
                     {
                         Intent intent = new Intent(LoginActivity.this,RegisterTeamActivity.class);
                         startActivity(intent);
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                     }
                 },new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
                     @Override

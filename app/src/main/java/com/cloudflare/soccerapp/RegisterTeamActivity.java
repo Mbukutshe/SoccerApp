@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
     private int mYear, mMonth, mDay;
     Spinner spinner;
     RequestQueue requestQueue;
+    String league;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,21 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);//onclick takes you to MainActivity.java
             }
         });
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Leagues,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                league = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                league = parent.getItemAtPosition(0).toString();
+            }
+        });
         AddTeamMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +81,6 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onResponse(String response)
                     {
-                        Intent intent = new Intent(RegisterTeamActivity.this, TeamMembersActivity.class);
-                        startActivity(intent);
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                     }
                 },new Response.ErrorListener(){
@@ -79,8 +95,9 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                         Map<String,String> parameters = new HashMap<String, String>();
                         parameters.put("Name",editTeamName.getText().toString());
                         parameters.put("Captain",editTeamCaptain.getText().toString());
-                        parameters.put("Chairman",editTeamCaptain.getText().toString());
+                        parameters.put("Chairman",editChairman.getText().toString());
                         parameters.put("Date",editFounded.getText().toString());
+                        parameters.put("League",league);
                         return parameters;
                     }
                 };
