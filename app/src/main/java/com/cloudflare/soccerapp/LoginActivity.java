@@ -92,13 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         Intent intent = new Intent(LoginActivity.this,RegisterTeamActivity.class);
                         startActivity(intent);
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+
                     }
                 },new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+
                     }
                 }){
                     @Override

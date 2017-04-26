@@ -21,12 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterTeamActivity" />
-        <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".LeagueActivity" />
-        <activity android:name=".ConfirmationActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".PostsActivity"></activity>
+        <activity android:name=".RegisterTeamActivity"
+            android:parentActivityName=".MainActivity"/>//back arrow goes to main activity
+        <activity android:name=".NewsFeedActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".LeagueActivity"
+            android:parentActivityName=".RegisterTeamActivity"/>
+        <activity android:name=".ConfirmationActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".PostsActivity"
+            android:parentActivityName=".NewsFeedActivity"/>
     </application>
 
 </manifest>

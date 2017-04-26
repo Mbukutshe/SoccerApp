@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,22 +47,14 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         editFounded = (EditText) findViewById(R.id.editFounded);
         spinner = (Spinner) findViewById(R.id.spinner);
 
-
-        Cancel = (Button) findViewById(R.id.btnCancel);
         AddTeamMembers = (Button) findViewById(R.id.btnAddTeamMembers);
         Date = (Button) findViewById(R.id.btnDate);
 
 
-        Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterTeamActivity.this, MainActivity.class);
-                startActivity(intent);//onclick takes you to MainActivity.java
-            }
-        });
+
         Spinner spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Leagues,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Leagues,R.layout.dropdown_items);
+        adapter.setDropDownViewResource(R.layout.dropdown_items);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,5 +132,23 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
             datePickerDialog.show();
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.matches)
+        {
+            Intent intent = new Intent(RegisterTeamActivity.this,LeagueActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
