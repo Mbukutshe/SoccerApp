@@ -4,7 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -31,6 +35,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
     private int mYear, mMonth, mDay;
     Spinner spinner;
     RequestQueue requestQueue;
+    String league;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,17 +47,24 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         editFounded = (EditText) findViewById(R.id.editFounded);
         spinner = (Spinner) findViewById(R.id.spinner);
 
-
-        Cancel = (Button) findViewById(R.id.btnCancel);
         AddTeamMembers = (Button) findViewById(R.id.btnAddTeamMembers);
         Date = (Button) findViewById(R.id.btnDate);
 
 
-        Cancel.setOnClickListener(new View.OnClickListener() {
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Leagues,R.layout.dropdown_items);
+        adapter.setDropDownViewResource(R.layout.dropdown_items);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterTeamActivity.this, MainActivity.class);
-                startActivity(intent);//onclick takes you to MainActivity.java
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                league = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                league = parent.getItemAtPosition(0).toString();
             }
         });
         AddTeamMembers.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +75,6 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onResponse(String response)
                     {
-                        Intent intent = new Intent(RegisterTeamActivity.this, TeamMembersActivity.class);
-                        startActivity(intent);
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                     }
                 },new Response.ErrorListener(){
@@ -79,8 +89,9 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                         Map<String,String> parameters = new HashMap<String, String>();
                         parameters.put("Name",editTeamName.getText().toString());
                         parameters.put("Captain",editTeamCaptain.getText().toString());
-                        parameters.put("Chairman",editTeamCaptain.getText().toString());
+                        parameters.put("Chairman",editChairman.getText().toString());
                         parameters.put("Date",editFounded.getText().toString());
+                        parameters.put("League",league);
                         return parameters;
                     }
                 };
@@ -121,5 +132,23 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
             datePickerDialog.show();
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.matches)
+        {
+            Intent intent = new Intent(RegisterTeamActivity.this,LeagueActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
