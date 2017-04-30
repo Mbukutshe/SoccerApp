@@ -5,6 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundsplash"
+    android:id="@+id/splash_layout"
     tools:context="com.cloudflare.soccerapp.MainActivity">
     <LinearLayout
         android:orientation="vertical"
@@ -18,10 +20,10 @@
         android:paddingRight="24dp">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/football"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp"/>
     <FrameLayout
@@ -31,29 +33,14 @@
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:scrollbars="none">
-
-        <Button
-            android:id="@+id/btnRegister"
-            android:background="@drawable/button_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="76dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Register" />
-
-        <Button
-            android:id="@+id/btnNewsFeed"
-            android:background="@drawable/button_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="76dp"
-            android:layout_marginStart="76dp"
-            android:text="NewsFeed" />
+    <TextView
+    android:id="@+id/app_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#fff"
+    android:textSize="15pt"
+    android:gravity="center"
+    android:text="FOOTBALL UPDATES" />
     </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

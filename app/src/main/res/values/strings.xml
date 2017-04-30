@@ -2,7 +2,8 @@
     <string name="app_name">Football Updates</string>
     <string name="welcome">The Teams, battling it out to be the best.Register your team to be part of the the storm or just browse on the on going matches</string>
     <string name="title_activity_login">Sign in</string>
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -22,6 +23,8 @@
         <item>League4</item>
     </string-array>
 
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">No Pictures</string>
+    <string name="hello_blank_matches">No Matches</string>
 
 </resources>

@@ -22,13 +22,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterTeamActivity"
-            android:parentActivityName=".MainActivity"/>//back arrow goes to main activity
-        <activity android:name=".NewsFeedActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".NewsFeedActivity"/>//back arrow goes to main activity
+        <activity android:name=".NewsFeedActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.Default"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".LeagueActivity"
-            android:parentActivityName=".RegisterTeamActivity"/>
+            android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".ConfirmationActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".PostsActivity"
             android:parentActivityName=".NewsFeedActivity"/>
