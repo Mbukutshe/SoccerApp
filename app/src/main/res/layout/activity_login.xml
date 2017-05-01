@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cloudflare.soccerapp.LoginActivity">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/login_layout">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:paddingTop="50dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -22,9 +23,10 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
             <ImageView
-                app:srcCompat="@mipmap/ic_launcher"
+                app:srcCompat="@drawable/foot"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
+                android:id="@+id/icon_logo"
                 android:layout_marginBottom="24dp"
                 android:layout_gravity="center_horizontal" />
             <TextView

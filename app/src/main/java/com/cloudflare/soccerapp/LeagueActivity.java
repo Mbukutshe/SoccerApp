@@ -3,10 +3,15 @@ package com.cloudflare.soccerapp;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,11 +25,19 @@ public class LeagueActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay;
     EditText editDate, editVenue, editScore, editTime;
     Button Submit, Date,Time;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.matches);
+
+        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.coordinator_matches);
+        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
+        layout.startAnimation(anim);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("New Match");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editDate = (EditText) findViewById(R.id.editDate);
         Submit= (Button) findViewById(R.id.btnMatches);

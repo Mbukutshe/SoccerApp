@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterTeamActivity"
+            android:theme="@style/AppTheme"
             android:parentActivityName=".NewsFeedActivity"/>//back arrow goes to main activity
         <activity android:name=".NewsFeedActivity">
             <intent-filter>
@@ -30,10 +31,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".LeagueActivity"
+            android:theme="@style/AppTheme"
             android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".ConfirmationActivity"
             android:parentActivityName=".NewsFeedActivity"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".PostsActivity"
             android:parentActivityName=".NewsFeedActivity"/>
     </application>

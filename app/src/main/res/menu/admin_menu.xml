@@ -7,10 +7,4 @@
         android:id="@+id/register_team"
         app:showAsAction="always">
     </item>
-    <item
-        android:title= "New Match"
-        android:id="@+id/matches"
-        android:icon="@drawable/newteam"
-        app:showAsAction="never">
-    </item>
 </menu>

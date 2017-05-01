@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +36,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.R.attr.button;
@@ -47,75 +54,37 @@ public class LoginActivity extends AppCompatActivity {
     Button Submit, Cancel;
     EditText username, password;
     RequestQueue requestQueue;
-
+    RecyclerView mRecyclerView;
+    LinearLayoutManager mLayoutManager;
+    CommentViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.comments_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Motaung.....");
+        mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_comment);
+        mRecyclerView.setHasFixedSize(true);
+        List<commentObject> myDataset = getAllItemList();
 
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new CommentViewAdapter(getApplicationContext(),myDataset);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),mLayoutManager.getOrientation()));
+        mRecyclerView.setAdapter(mAdapter);
 
-        Submit= (Button)  findViewById(R.id.btnSubmit);
-        Cancel= (Button)  findViewById(R.id.btnCancel2);
-        username= (EditText)  findViewById(R.id.editUsername);
-        password= (EditText)  findViewById(R.id.editPassword);
+    }
+    private List<commentObject> getAllItemList(){
 
-
-        Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent); //onclick takes you to RegisterActivity.java
-            }
-        });
-
-
-        Submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //login
-               /*ProgressDialog progress = null;
-                progress =  ProgressDialog.show(getApplicationContext(),null,"Authenticating...",true);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-
-                }).start();*/
-
-                String url = "https://soccer.payghost.co.za/login.inc.php";
-                StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        Intent intent = new Intent(LoginActivity.this,RegisterTeamActivity.class);
-                        startActivity(intent);
-
-                    }
-                },new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams(){
-                        Map<String,String> parameters = new HashMap<String, String>();
-                        parameters.put("username",username.getText().toString());
-                        parameters.put("password",password.getText().toString());
-                        return parameters;
-                    }
-                };
-                request.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(request);
-            }
-        });
-
-
+        List<commentObject> allItems = new ArrayList<commentObject>();
+        allItems.add(new commentObject("17:00","Vim cu veritus accumsan. Eu pri quando nullam splendide, cu nisl dicat noluisse vis, unum wisi minimum eu has. Est justo nonumy ex, sed nobis assueverit no. Ad ius regione apeirian, qui ut quas pertinax quaerendum, dico percipit mel ut. Nec in cibo virtute. Quo no quis impedit. Accusata evertitur consequat eu eum."));
+        allItems.add(new commentObject("20:25","Lorem ipsum dolor sit amet, tation volutpat id pri, vel an lorem simul graece. Ne sed lorem nemore honestatis, quo ex sonet mediocrem. Nullam tractatos salutatus sit ut, ludus honestatis qui ei. Quo error feugait reprimique an, nulla legimus detraxit an eam. Partem mandamus electram has ea, denique fierent per ex. Ei quo menandri instructior, ei graeco labitur eloquentiam vim."));
+        allItems.add(new commentObject("23:50","Summo efficiantur pri et. Ferri fierent id est, per augue soluta scaevola ea. Quodsi assueverit sea no, mea ne mediocrem definiebas comprehensam, mundi numquam propriae sed eu. Et porro clita usu, duo an nisl iisque civibus, diam vivendum pro ex. Id amet unum altera sit."));
+        allItems.add(new commentObject("07:10","Id iudico postea aliquando has, porro impedit recusabo ad pro. At esse democritum complectitur eum, ea sed placerat antiopam liberavisse, omittam singulis tincidunt vim no. Sonet animal posidonium at qui, minimum complectitur ei nam. Erat ridens sit ex, mel error labores referrentur in. Te vix dicat dignissim, minim eirmod delectus an pri. Eum docendi nostrum fastidii an, his an dicunt tritani principes."));
+        return allItems;
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
     {

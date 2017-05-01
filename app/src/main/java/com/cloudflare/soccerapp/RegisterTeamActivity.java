@@ -2,12 +2,16 @@ package com.cloudflare.soccerapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,8 +46,16 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_team);
+
+        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.coordinator_team);
+        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
+        layout.startAnimation(anim);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("New Team");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         editTeamName = (EditText) findViewById(R.id.editTeamName);
         editTeamCaptain = (EditText) findViewById(R.id.editTeamCaptain);
         editChairman = (EditText) findViewById(R.id.editChairman);
@@ -139,18 +151,15 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
-
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id==R.id.matches)
-        {
-            Intent intent = new Intent(RegisterTeamActivity.this,LeagueActivity.class);
-            startActivity(intent);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
