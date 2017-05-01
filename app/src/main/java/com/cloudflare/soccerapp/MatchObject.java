@@ -8,6 +8,7 @@ public class MatchObject {
     private int firstBadge;
     private int secondBadge;
     private String time;
+    private String ground;
     private String firstTeam;
     private String secondTeam;
 
@@ -19,6 +20,13 @@ public class MatchObject {
         this.setFirstTeam(firstTeam);
         this.setSecondTeam(secondTeam);
 
+    }
+    public String getGround() {
+        return ground;
+    }
+
+    public void setGround(String ground) {
+        this.ground = ground;
     }
 
     public String getTime() {
