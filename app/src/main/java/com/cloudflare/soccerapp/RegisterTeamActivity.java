@@ -47,15 +47,11 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_team);
 
-        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.coordinator_team);
-        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
-        layout.startAnimation(anim);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Team");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
         editTeamName = (EditText) findViewById(R.id.editTeamName);
         editTeamCaptain = (EditText) findViewById(R.id.editTeamCaptain);
         editChairman = (EditText) findViewById(R.id.editChairman);
@@ -65,7 +61,9 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         AddTeamMembers = (Button) findViewById(R.id.btnAddTeamMembers);
         Date = (Button) findViewById(R.id.btnDate);
 
-
+        CoordinatorLayout layout = (CoordinatorLayout)findViewById(R.id.coordinator_team);
+        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
+        layout.startAnimation(anim);
 
         Spinner spinner = (Spinner)findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Leagues,R.layout.dropdown_items);
@@ -154,13 +152,4 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

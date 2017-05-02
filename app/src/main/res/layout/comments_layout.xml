@@ -73,6 +73,6 @@
             android:background="@drawable/button_background"
             android:layout_margin="5dp"
             android:layout_gravity="right|end"
-            android:text="send"/>
+            android:text="post"/>
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

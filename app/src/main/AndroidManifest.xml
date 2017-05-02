@@ -21,15 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterTeamActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".NewsFeedActivity"/>//back arrow goes to main activity
         <activity android:name=".NewsFeedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.Default"/>
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterTeamActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".NewsFeedActivity"/>//back arrow goes to main activity
         <activity android:name=".LeagueActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".NewsFeedActivity"/>
