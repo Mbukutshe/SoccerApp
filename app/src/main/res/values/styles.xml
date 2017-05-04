@@ -10,4 +10,12 @@
     <style name="popup" parent="@android:style/Widget.PopupMenu">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+    <style name="ProgressBar" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:indeterminateDrawable">@drawable/circular_dialog</item>
+    </style>
 </resources>

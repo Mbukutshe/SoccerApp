@@ -1,6 +1,10 @@
 package com.cloudflare.soccerapp;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -29,6 +33,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -103,8 +108,17 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                             Submit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.loading_anim);
-                                    icon.startAnimation(anim);
+                                 /*   Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.loading_anim);
+                                    icon.startAnimation(anim);*/
+                                    final ProgressDialog myProgressDialog = new ProgressDialog(dialog.getContext());
+                                    //myProgressDialog.setProgressStyle(R.style.ProgressBar);
+
+                                    //myProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                                    myProgressDialog.show();
+                                    myProgressDialog.setContentView(R.layout.progress);
+                                    ProgressBar progressBar = (ProgressBar)myProgressDialog.findViewById(R.id.progressBar);
+                                    progressBar.getIndeterminateDrawable()
+                                            .setColorFilter(Color.parseColor("#d5fd00"), PorterDuff.Mode.MULTIPLY);
                                     String url = "https://soccer.payghost.co.za/login.inc.php";
                                     StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
                                         @Override
@@ -113,6 +127,7 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                                             Intent intent = new Intent(NewsFeedActivity.this,LeagueActivity.class);
                                             startActivity(intent); //onclick takes you to LeagueActivity.java
                                             dialog.dismiss();
+                                            myProgressDialog.dismiss();
                                         }
                                     },new Response.ErrorListener(){
                                         @Override
