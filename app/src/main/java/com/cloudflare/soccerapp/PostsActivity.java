@@ -98,7 +98,7 @@ public class PostsActivity extends AppCompatActivity {
         final ProgressDialog myProgressDialog = new ProgressDialog(PostsActivity.this);
         //myProgressDialog.setProgressStyle(R.style.ProgressBar);
 
-        //myProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         myProgressDialog.show();
         myProgressDialog.setContentView(R.layout.progress);
         ProgressBar progressBar = (ProgressBar)myProgressDialog.findViewById(R.id.progressBar);
