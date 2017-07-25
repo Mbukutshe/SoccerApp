@@ -1,25 +1,28 @@
 package com.cloudflare.soccerapp;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Wiseman on 2016-10-02.
  */
 
 public class ItemObject {
 
-    private int image;
+    private Bitmap image;
     private String title;
-
-    public ItemObject(int image, String title)
+    private String key;
+    public ItemObject(Bitmap image, String title,String key)
     {
         this.image=image;
         this.title = title;
+        this.setKey(key);
     }
 
-    public int getImage()
+    public Bitmap getImage()
     {
         return image;
     }
-    public void setImage(int image)
+    public void setImage(Bitmap image)
     {
         this.image = image;
     }
@@ -33,4 +36,11 @@ public class ItemObject {
     }
 
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }

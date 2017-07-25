@@ -2,26 +2,20 @@ package com.cloudflare.soccerapp;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -111,9 +105,6 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                                  /*   Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.loading_anim);
                                     icon.startAnimation(anim);*/
                                     final ProgressDialog myProgressDialog = new ProgressDialog(dialog.getContext());
-                                    //myProgressDialog.setProgressStyle(R.style.ProgressBar);
-
-                                    //myProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                                     myProgressDialog.show();
                                     myProgressDialog.setContentView(R.layout.progress);
                                     ProgressBar progressBar = (ProgressBar)myProgressDialog.findViewById(R.id.progressBar);

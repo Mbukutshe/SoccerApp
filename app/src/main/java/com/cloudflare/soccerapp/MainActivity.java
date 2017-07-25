@@ -1,15 +1,9 @@
 package com.cloudflare.soccerapp;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         TextView appName = (TextView)findViewById(R.id.app_name);
         appName.clearAnimation();
         appName.startAnimation(upAnim);
+
         final Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
         imageView.startAnimation(anim);
         anim.setAnimationListener(new Animation.AnimationListener() {

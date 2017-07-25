@@ -30,7 +30,21 @@
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/colorPrimary" />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:rotation="90"
+                android:layout_gravity="right|end"
+                android:src="@drawable/threedots"/>
         </FrameLayout>
     </LinearLayout>
 

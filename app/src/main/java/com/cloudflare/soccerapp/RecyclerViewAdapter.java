@@ -5,18 +5,12 @@ package com.cloudflare.soccerapp;
  */
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -37,9 +31,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         return rcv;
     }
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         holder.title.setText(itemList.get(position).getTitle());
-        holder.image.setImageResource(itemList.get(position).getImage());
+        holder.image.setImageBitmap(itemList.get(position).getImage());
+        holder.key.setText(itemList.get(position).getKey());
         Animation upAnim = AnimationUtils.loadAnimation(context,R.anim.alpha);
         upAnim.reset();
         holder.itemView.clearAnimation();
@@ -83,6 +78,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 int comment = Integer.parseInt(holder.commentText.getText().toString())+1;
                 holder.commentText.setText(""+comment);
                 Intent intent = new Intent(context,LoginActivity.class);
+                intent.putExtra("Image",itemList.get(position).getImage());
+                intent.putExtra("Title",itemList.get(position).getTitle());
+                intent.putExtra("key",holder.key.getText().toString());
                 context.startActivity(intent);
             }
         });

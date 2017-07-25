@@ -4,18 +4,14 @@ package com.cloudflare.soccerapp;
  * Created by Wiseman on 2016-04-24.
  */
 import android.content.Context;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
-    public TextView title,likeText,commentText;
+    public TextView title,likeText,commentText,key;
     public ImageView image,options,like,share,comment;
     public Context context;
 
@@ -29,6 +25,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder{
         comment = (ImageView)itemView.findViewById(R.id.comments);
         likeText = (TextView) itemView.findViewById(R.id.like_text);
         commentText = (TextView) itemView.findViewById(R.id.comment_text);
+        key = (TextView)itemView.findViewById(R.id.key);
     }
 }
 
