@@ -3,6 +3,7 @@ package com.cloudflare.soccerapp;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.firebase.client.Firebase;
@@ -27,8 +27,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,View.OnTouchListener{
 
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     RecyclerView mRecyclerView;
     LinearLayoutManager mLayoutManager;
     CommentViewAdapter mAdapter;
-    CardView post_comment;
+    AppCompatButton post_comment;
     TextView close,send,error_input;
     CardView post;
     private DatabaseReference mdatabaseRef,reference;
@@ -80,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getAllItemList();
 
         post = (CardView)findViewById(R.id.post);
-        post_comment= (CardView)findViewById(R.id.add_comment);
+        post_comment= (AppCompatButton) findViewById(R.id.add_comment);
         post_comment.setOnClickListener(this);
 
         close = (TextView)findViewById(R.id.closing);
@@ -95,45 +99,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     private void getAllItemList(){
 
-        mdatabaseRef.addChildEventListener(new ChildEventListener() {
+        reference =  FirebaseDatabase.getInstance().getReference().child("Post").child(key).child("Comments");
+
+        reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                reference =  FirebaseDatabase.getInstance().getReference().child("Post").child(key).child("Comments");
-                reference.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Toast.makeText(getApplicationContext(), key, Toast.LENGTH_SHORT).show();
-                        comments =dataSnapshot.getValue(Comments.class);
-                        myDataset.add(new commentObject(comments.time,comments.comment));
-                        mAdapter.notifyDataSetChanged();
-                    }
 
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                comments = dataSnapshot.getValue(Comments.class);
+                myDataset.add(new commentObject(comments.time, comments.comment));
+                mAdapter.notifyDataSetChanged();
 
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+                comments = dataSnapshot.getValue(Comments.class);
+                myDataset.add(new commentObject(comments.time, comments.comment));
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -161,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.add_comment:
 
                 Animation upAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_out);
-                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
+                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fromtop_translation);
                 post.startAnimation(anim);
                 post.setVisibility(View.VISIBLE);
 
@@ -202,6 +185,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 else
                 {
+                    reference =  FirebaseDatabase.getInstance().getReference().child("Post").child(key).child("Comments");
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat dateformat = new SimpleDateFormat("hh:mm aa");
+                    String time = dateformat.format(c.getTime());
+                    Map<String,String> comment = new HashMap<String,String>();
+                    comment.put("comment", message.getText().toString());
+                    comment.put("time",time);
+                    reference.push().setValue( comment);
+
                     Animation uAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
                     Animation pAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translate_right);
                     post.startAnimation(pAnim);

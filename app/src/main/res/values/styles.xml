@@ -7,9 +7,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="popup" parent="@android:style/Widget.PopupMenu">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
     <style name="ProgressBar" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
@@ -17,5 +19,51 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:visibility">gone</item>
         <item name="android:indeterminateDrawable">@drawable/circular_dialog</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlActivated">#000</item>
+    </style>
+
+    <style name="TextInputThemeLayout" parent="@style/AppTheme">
+        <item name="colorControlNormal">#FAFAFA</item>
+        <item name="colorControlActivated">#FAFAFA</item>
+    </style>
+
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="font" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="SpinnerAppTheme" parent="@style/TextInputThemeLayout">
+        <item name="spinnerStyle">@style/Spinner</item>
+    </style>
+
+    <style name="Spinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/dropdown_selector</item>
+        <item name="android:color">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#fafafa</item>
+    </style>
+
+    <style name="spinnerDropdownText" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:color">@color/colorPrimary</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+
     </style>
 </resources>

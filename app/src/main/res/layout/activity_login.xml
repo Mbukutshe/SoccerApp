@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/login_layout">
-
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:scrollbars="none"
         android:paddingTop="50dp">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -38,21 +36,17 @@
                 android:gravity="center"
                 android:layout_marginBottom="24dp"
                 android:paddingRight="56dp"/>
-            <!--  Name Label -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
-
                 <EditText android:id="@+id/editUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:hint="Username" />
+                    android:hint="@string/username" />
             </android.support.design.widget.TextInputLayout>
-
-            <!-- Password Label -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,10 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Password"/>
+                    android:hint="@string/password"/>
             </android.support.design.widget.TextInputLayout>
-
-            <!-- Signup Button -->
         <FrameLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -79,12 +71,19 @@
                 android:layout_marginTop="24dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="12dp"
-                android:layout_toLeftOf="@+id/btnCancel2"
-                android:text="Submit"
-                android:layout_alignParentBottom="true"
+                android:text="@string/submit"
+                android:textColor="@drawable/button_selector"
                 android:background="@drawable/button_background" />
             </FrameLayout>
         </LinearLayout>
-
     </ScrollView>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:theme="@style/LinearProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/scrollView"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"/>
 </RelativeLayout>

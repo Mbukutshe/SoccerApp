@@ -5,7 +5,7 @@
     android:id="@+id/card_view"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:layout_gravity="bottom|end"
+    android:layout_gravity="center"
     card_view:cardBackgroundColor="@color/cardview_light_background"
     card_view:cardElevation="5dp"
     card_view:cardCornerRadius="10dp"
@@ -13,24 +13,11 @@
     card_view:contentPaddingTop="16dp"
     card_view:contentPaddingRight="16dp"
     card_view:cardPreventCornerOverlap="false"
-    card_view:theme="@style/AlertDialog.AppCompat"
-    android:layout_marginTop="5dp">
+    card_view:theme="@style/AlertDialog.AppCompat">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp">
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/layout_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:rotation="270"/>
-        </LinearLayout>
         <LinearLayout
             android:id="@+id/layout_choose"
             android:orientation="horizontal"
@@ -42,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
+                    android:id="@+id/fab_camera"
                     android:layout_gravity="top|center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,7 +37,7 @@
                     app:borderWidth="20dp"
                     app:elevation="5dp"
                     app:backgroundTint="#EAEAEA"
-                    app:srcCompat="@drawable/picture"
+                    app:srcCompat="@drawable/teamlogo"
                     />
                 <TextView
                     android:textColor="@color/colorPrimary"
@@ -87,35 +74,5 @@
             </FrameLayout>
 
         </LinearLayout>
-        <FrameLayout
-            android:visibility="gone"
-            android:id="@+id/layout_caption"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom">
-            <EditText
-                android:backgroundTint="@null"
-                android:id="@+id/title_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:hint="Add Caption..."
-                android:layout_gravity="bottom"/>
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_send"
-                android:layout_width="wrap_content"
-                android:layout_gravity="right|end"
-                android:layout_height="wrap_content"
-                app:fabSize="mini"
-                app:borderWidth="0dp"
-                app:elevation="5dp"
-                app:backgroundTint="#EAEAEA"
-                app:srcCompat="@drawable/sending"
-                />
-        </FrameLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
-

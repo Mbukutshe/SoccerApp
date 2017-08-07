@@ -10,16 +10,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -48,8 +50,9 @@ import java.util.Map;
 public class PostsActivity extends AppCompatActivity {
 
     private ImageButton photoButton;
-    private Button upload;
+    private FloatingActionButton upload;
     private static final int CAMERA_REQUEST = 1888;
+    private static final int RESULT_LOAD_IMAGE=1;
     private ImageView imageView;
     RequestQueue requestQueue;
     private Firebase dbFirebase ,firebase;
@@ -59,25 +62,47 @@ public class PostsActivity extends AppCompatActivity {
     private StorageReference storageReference,storageRef;
     EditText title;
     String path;
+    FrameLayout caption;
+    CardView cardView;
+    LinearLayout choose,layoutImage;
+    ByteArrayOutputStream bytes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Capture & Post Image");
-
         Firebase.setAndroidContext(this);
         imageView = (ImageView)findViewById(R.id.imageView2);
-        upload = (Button)findViewById(R.id.btnUpload);
+        upload = (FloatingActionButton) findViewById(R.id.fab_send);
         title = (EditText)findViewById(R.id.title_image);
       /*  String encodedImage = "";
         byte[] decodeImage = Base64.decode(encodedImage,Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
         imageView.setImageBitmap(bitmap);*/
+        cardView  = (CardView)findViewById(R.id.card_view);
+        caption = (FrameLayout)findViewById(R.id.layout_caption);
+        choose = (LinearLayout)findViewById(R.id.layout_choose);
+        layoutImage = (LinearLayout)findViewById(R.id.layout_image);
 
-
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choose.setVisibility(View.GONE);
+                cardView.setVisibility(View.GONE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent,CAMERA_REQUEST);
+            }
+        });
+        FloatingActionButton fabGallery = (FloatingActionButton)findViewById(R.id.fab_gallery);
+        fabGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choose.setVisibility(View.GONE);
+                cardView.setVisibility(View.GONE);
+                Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,RESULT_LOAD_IMAGE);
+            }
+        });
        // dbFirebase = new Firebase("https://soccerapp-a3542.firebaseio.com/").child("Posts").push();
         mdatabaseRef = FirebaseDatabase.getInstance().getReference().child("Post").push();
         reference = FirebaseDatabase.getInstance().getReference().child("Comments").push();
@@ -85,8 +110,12 @@ public class PostsActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
 
+                final  String encodeImage = Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
+                mdatabaseRef.child("Picture").setValue(encodeImage);
+                mdatabaseRef.child("Title").setValue(title.getText().toString());
+                mdatabaseRef.child("Comments").push();
+                finish();
               //post(image,title.getText().toString());
             /*  Firebase childRef_name = mRoofRef.child("Image_Title");
                 childRef_name.setValue(title.getText().toString());
@@ -118,8 +147,7 @@ public class PostsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.capture)
         {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent,CAMERA_REQUEST);
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,70 +155,47 @@ public class PostsActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK ) {
 
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+            cardView.setVisibility(View.VISIBLE);
+            caption.setVisibility(View.VISIBLE);
+            layoutImage.setVisibility(View.VISIBLE);
+            cardView.setCardBackgroundColor(Color.BLACK);
+            cardView.getBackground().setAlpha(240);
+            caption.getBackground().setAlpha(0);
             imageView.setDrawingCacheEnabled(true);
             imageView.buildDrawingCache();
             imageView.setImageBitmap(photo);
             //showing it on the image view widget
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bytes = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
-            final  String encodeImage = Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
-            mdatabaseRef.child("Picture").setValue(encodeImage);
-            mdatabaseRef.child("Title").setValue("Picture Title");
-            Map<String,String> users = new HashMap<String,String>();
-            users.put("comment", "I got it bru");
-            users.put("time","07:00 am");
-            mdatabaseRef.child("Comments").push().setValue(users);
-
-
-
-         /* String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), photo,"title", null);
-            imageUri =Uri.parse(path);
-            imageUri = (Uri)data.getExtras().get("data");
-
-            Cursor cursor = getContentResolver().query(imageUri, null, null, null, null);
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            imageUri = Uri.parse(cursor.getString(idx));*/
+/* Beautiful progress
             final ProgressDialog myProgressDialog = new ProgressDialog(PostsActivity.this);
             //myProgressDialog.setProgressStyle(R.style.ProgressBar);
             myProgressDialog.show();
             myProgressDialog.setContentView(R.layout.progress);
             ProgressBar progressBar = (ProgressBar)myProgressDialog.findViewById(R.id.progressBar);
             progressBar.getIndeterminateDrawable()
-                    .setColorFilter(Color.parseColor("#d5fd00"), PorterDuff.Mode.MULTIPLY);
-/*
-            storageReference = storageRef .child("images").child(imageUri.getLastPathSegment());
-            storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    .setColorFilter(Color.parseColor("#d5fd00"), PorterDuff.Mode.MULTIPLY);*/
 
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    Toast.makeText(getApplicationContext(),downloadUrl+"",Toast.LENGTH_LONG).show();
-                    myProgressDialog.dismiss();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    TextView pr = (TextView)myProgressDialog.findViewById(R.id.progress_percent);
-                    pr.setText(e.getMessage());
-
-                }
-            })
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                    TextView pr = (TextView)myProgressDialog.findViewById(R.id.progress_percent);
-                    pr.setText(""+(int)progress+"%");
-                }
-            });
-            */
-
-            this.path = path;
-       //     Toast.makeText(getApplicationContext(),data.getData()+"",Toast.LENGTH_LONG).show();
         }
+        else
+            if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK )
+            {
+                Uri photo =  data.getData();
+                cardView.setVisibility(View.VISIBLE);
+                caption.setVisibility(View.VISIBLE);
+                layoutImage.setVisibility(View.VISIBLE);
+                cardView.setCardBackgroundColor(Color.BLACK);
+                cardView.getBackground().setAlpha(240);
+                caption.getBackground().setAlpha(0);
+                imageView.setDrawingCacheEnabled(true);
+                imageView.buildDrawingCache();
+                imageView.setImageURI(photo);
+
+                Bitmap bitmap= ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            }
     }
     public void post(Bitmap image,final String name)
     {

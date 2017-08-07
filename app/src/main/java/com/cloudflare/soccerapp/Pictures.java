@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.ChildEventListener;
@@ -32,6 +33,7 @@ public class Pictures extends Fragment {
     RecyclerViewAdapter mAdapter;
     List<ItemObject> allItems;
     Post post;
+    Firebase fire;
     private DatabaseReference mdatabaseRef,reference;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,17 +42,20 @@ public class Pictures extends Fragment {
         // Inflate the layout for this fragment
         Firebase.setAndroidContext(this.getContext());
 
+        //Newer version of Firebase
         allItems= new ArrayList<ItemObject>();
         mRecyclerView = (RecyclerView) myView.findViewById(R.id.my_recycler_pictures);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this.getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mdatabaseRef = FirebaseDatabase.getInstance().getReference().child("Post");
-        mAdapter = new RecyclerViewAdapter(getContext(),allItems);
+        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressToolBar);
+        mAdapter = new RecyclerViewAdapter(getContext(),allItems,progressBar);
         mRecyclerView.setAdapter(mAdapter);
         getData();
-
         return myView;
     }
     public  void getData()
@@ -63,6 +68,28 @@ public class Pictures extends Fragment {
                 post =dataSnapshot.getValue(Post.class);
                 byte[] decodeImage = Base64.decode( post.Picture, Base64.DEFAULT);
                 bitmap= BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
+/*
+                float scaleWidth = ((float) 0.5) ;
+                float scaleHeight = ((float) 0.5);
+
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+                DisplayMetrics outMetrics = new DisplayMetrics();
+                display.getMetrics(outMetrics);
+                float pxWidth = outMetrics.widthPixels;
+                float screenWidth= pxWidth;
+                float newHeight = screenWidth;
+                if (bitmap.getWidth() != 0 && bitmap.getHeight() != 0) {
+                    newHeight = (screenWidth * bitmap.getHeight()) / bitmap.getWidth();
+                }
+                // create a matrix for the manipulation
+                Matrix matrix = new Matrix();
+
+                // resize the bit map
+                matrix.postScale(scaleWidth, scaleHeight);
+
+                // recreate the new Bitmap
+                bitmap = Bitmap.createScaledBitmap(bitmap,(int)screenWidth, (int)newHeight,true);*/
+
                 String key = dataSnapshot.getKey();
                 allItems.add(new ItemObject(bitmap,post.Title,key));
                 mAdapter.notifyDataSetChanged();

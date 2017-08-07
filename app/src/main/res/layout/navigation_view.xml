@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/side_background"
         android:layout_gravity="right"
+        android:alpha="0.9"
         android:scrollbars="none"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"

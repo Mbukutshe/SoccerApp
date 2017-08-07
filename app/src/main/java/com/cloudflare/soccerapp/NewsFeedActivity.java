@@ -1,10 +1,7 @@
 package com.cloudflare.soccerapp;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -49,6 +46,7 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
     ViewPager viewPager;
     DrawerLayout drawer;
     RequestQueue requestQueue;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,14 +84,16 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                     postImage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             final Dialog dialog = new Dialog(v.getContext());
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setCanceledOnTouchOutside(false);
                             dialog.setContentView(R.layout.activity_login);
                             RelativeLayout layout = (RelativeLayout)dialog.findViewById(R.id.login_layout);
-                            final Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
+                            final Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
                             final ImageView icon = (ImageView)dialog.findViewById(R.id.icon_logo);
                             layout.startAnimation(anim);
+                            progressBar = (ProgressBar)dialog.findViewById(R.id.progressBar);
 
                             Button Submit= (Button)dialog.findViewById(R.id.btnSubmit);
                             final EditText username= (EditText)dialog.findViewById(R.id.editUsername);
@@ -102,23 +102,32 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                             Submit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                 /*   Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.loading_anim);
-                                    icon.startAnimation(anim);*/
-                                    final ProgressDialog myProgressDialog = new ProgressDialog(dialog.getContext());
-                                    myProgressDialog.show();
-                                    myProgressDialog.setContentView(R.layout.progress);
-                                    ProgressBar progressBar = (ProgressBar)myProgressDialog.findViewById(R.id.progressBar);
-                                    progressBar.getIndeterminateDrawable()
-                                            .setColorFilter(Color.parseColor("#d5fd00"), PorterDuff.Mode.MULTIPLY);
+                                    Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
+                                    progressBar.startAnimation(anim);
+                                    anim.setAnimationListener(new Animation.AnimationListener() {
+                                        @Override
+                                        public void onAnimationStart(Animation animation) {
+                                            progressBar.setVisibility(View.VISIBLE);
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animation animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animation animation) {
+
+                                        }
+                                    });
                                     String url = "https://soccer.payghost.co.za/login.inc.php";
                                     StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
                                         @Override
                                         public void onResponse(String response)
                                         {
                                             Intent intent = new Intent(NewsFeedActivity.this,LeagueActivity.class);
-                                            startActivity(intent); //onclick takes you to LeagueActivity.java
                                             dialog.dismiss();
-                                            myProgressDialog.dismiss();
+                                            startActivity(intent); //onclick takes you to LeagueActivity.java
                                         }
                                     },new Response.ErrorListener(){
                                         @Override
@@ -201,7 +210,7 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
             dialog.setCanceledOnTouchOutside(false);
             dialog.setContentView(R.layout.activity_login);
             RelativeLayout layout = (RelativeLayout)dialog.findViewById(R.id.login_layout);
-            final Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.layout_anim);
+            final Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
             final ImageView icon = (ImageView)dialog.findViewById(R.id.icon_logo);
             layout.startAnimation(anim);
 
@@ -250,8 +259,8 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
     }
     private void setupViewPager(ViewPager viewPager) {
         viewPagerAdapter adapter = new viewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new Pictures(), "PICTURES");
-        adapter.addFrag(new Matches(), "MATCHES");
+        adapter.addFrag(new Pictures(), "MATCH POSTS");
+        adapter.addFrag(new Matches(), "FIXTURE");
 
         viewPager.setAdapter(adapter);
     }
@@ -268,17 +277,20 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return mFragmentList.size();
         }
 
-        public void addFrag(Fragment fragment, String title) {
+        public void addFrag(Fragment fragment, String title)
+        {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
+        public CharSequence getPageTitle(int position)
+        {
             return mFragmentTitleList.get(position);
         }
     }

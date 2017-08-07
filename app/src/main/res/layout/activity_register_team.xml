@@ -2,10 +2,13 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordinator_team"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cloudflare.soccerapp.RegisterTeamActivity">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,129 +20,5 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
-    android:padding="50dp">
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:scrollbars="none">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scrollbars="none"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText
-            android:id="@+id/editTeamName"
-            android:hint="Team Name"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText
-            android:id="@+id/editTeamCaptain"
-            android:hint="Team Captain"
-            android:layout_below="@id/editTeamName"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:layout_marginBottom="8dp">
-
-        <EditText
-            android:id="@+id/editChairman"
-            android:hint="Chairman"
-            android:layout_below="@id/editTeamCaptain"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"  />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnDate"
-        android:layout_marginTop="30dp"
-      />
-    <FrameLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:scrollbars="none">
-    <Button
-        android:id="@+id/btnDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:background="@drawable/button_background"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/editChairman"
-        android:layout_alignLeft="@+id/btnCancel"
-        android:layout_alignStart="@+id/btnCancel" />
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="right"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="8dp">
-        <EditText
-            android:id="@+id/editFounded"
-            android:hint="Founded"
-            android:layout_below="@id/editChairman"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
-
-    </FrameLayout>
-    <FrameLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:scrollbars="none">
-        <Button
-            android:id="@+id/btnAddTeamMembers"
-            android:layout_width="wrap_content"
-            android:background="@drawable/button_background"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:padding="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true" />
-
-    </FrameLayout>
-     </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+  <include layout="@layout/new_team_layout"/>
 </android.support.design.widget.CoordinatorLayout>

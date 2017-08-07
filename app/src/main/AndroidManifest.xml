@@ -36,11 +36,10 @@
         </activity>
         <activity android:name=".RegisterTeamActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/TextInputThemeLayout"
             android:parentActivityName=".NewsFeedActivity"/>//back arrow goes to main activity
         <activity android:name=".LeagueActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
             android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".ConfirmationActivity"
             android:screenOrientation="portrait"
@@ -50,7 +49,8 @@
             android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".PostsActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".NewsFeedActivity"/>
+            android:parentActivityName=".NewsFeedActivity"
+            android:theme="@style/Theme.Transparent"/>
     </application>
 
 </manifest>

@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,35 +38,21 @@ public class MatchViewAdapter extends RecyclerView.Adapter<MatchViewHolder>{
         holder.secondBadge.setImageResource(itemList.get(position).getSecondBadge());
         final CardView cardView = (CardView)holder.itemView.findViewById(R.id.card_view);
         final Animation upAnim = AnimationUtils.loadAnimation(context,R.anim.fromtop_translation);
+        final Animation Anim = AnimationUtils.loadAnimation(context,R.anim.alpha);
         upAnim.reset();
-        cardView.startAnimation(upAnim);
+        cardView.startAnimation(Anim);
+        holder.itemView.startAnimation(Anim);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardView.setMinimumHeight(300);
-                upAnim.reset();
-                holder.time.startAnimation(upAnim);
-                upAnim.reset();
-                holder.ground.startAnimation(upAnim);
-                upAnim.reset();
-                holder.date.startAnimation(upAnim);
-                holder.details.setMinimumHeight(150);
-                holder.date.setText("Date : 01/05/207");
-                holder.time.setText("Time: 07:42pm");
-                holder.ground.setText("Stadium : Moses Mabhida Stadium");
+
             }
         });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-                holder.details.startAnimation(upAnim);
-                upAnim.reset();
-                cardView.setMinimumHeight(0);
-                holder.details.setMinimumHeight(0);
-                holder.date.setText("");
-                holder.time.setText("");
-                holder.ground.setText("");
+
                 return false;
             }
         });

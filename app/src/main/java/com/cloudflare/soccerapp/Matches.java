@@ -2,10 +2,7 @@ package com.cloudflare.soccerapp;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -51,6 +48,10 @@ public class Matches extends Fragment {
 
 
         return myView;
+    }
+    public void getFixtures()
+    {
+
     }
     private List<MatchObject> getAllItemList(){
 
