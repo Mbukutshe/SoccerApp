@@ -41,9 +41,6 @@
         <activity android:name=".LeagueActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".NewsFeedActivity"/>
-        <activity android:name=".ConfirmationActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".NewsFeedActivity"/>
         <activity android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".NewsFeedActivity"/>

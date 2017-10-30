@@ -18,6 +18,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -26,6 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     private List<ItemObject> itemList;
     private Context context,c;
     ProgressBar progressBar;
+    private DatabaseReference mdatabaseRef;
     public RecyclerViewAdapter(Context context, List<ItemObject> itemList,ProgressBar progressBar) {
         this.itemList = itemList;
         this.context = context;
@@ -103,16 +110,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             public void onClick(View view) {
                 Animation rotate = AnimationUtils.loadAnimation(context,R.anim.alpha);
                 holder.share.startAnimation(rotate);
-                int comment = Integer.parseInt(holder.commentText.getText().toString())+1;
-                holder.commentText.setText(""+comment);
                 Intent intent = new Intent(context,LoginActivity.class);
-                intent.putExtra("Image",itemList.get(position).getImage());
                 intent.putExtra("Title",itemList.get(position).getTitle());
                 intent.putExtra("key",holder.key.getText().toString());
                 context.startActivity(intent);
             }
         });
+        mdatabaseRef= FirebaseDatabase.getInstance().getReference().child("Post").child(itemList.get(position).getKey()).child("Comments");
+        mdatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count =0;
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    count++;
+                    holder.commentText.setText(count+"");
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
        /* Context popup = new ContextThemeWrapper(context,R.style.popup);
         final PopupMenu optionsMenu = new PopupMenu(popup,options);
         MenuInflater inflater = optionsMenu.getMenuInflater();

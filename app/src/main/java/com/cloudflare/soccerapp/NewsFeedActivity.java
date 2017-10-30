@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -98,36 +100,34 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                             Button Submit= (Button)dialog.findViewById(R.id.btnSubmit);
                             final EditText username= (EditText)dialog.findViewById(R.id.editUsername);
                             final EditText password= (EditText)dialog.findViewById(R.id.editPassword);
+                            final TextInputLayout usernameLayout,passwordLayout;
+                            final TextView error = (TextView)dialog.findViewById(R.id.error);
+                            usernameLayout = (TextInputLayout)dialog.findViewById(R.id.usernameInputLayout);
+                            passwordLayout = (TextInputLayout)dialog.findViewById(R.id.passwordInputLayout);
 
                             Submit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
-                                    progressBar.startAnimation(anim);
-                                    anim.setAnimationListener(new Animation.AnimationListener() {
-                                        @Override
-                                        public void onAnimationStart(Animation animation) {
-                                            progressBar.setVisibility(View.VISIBLE);
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animation animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animation animation) {
-
-                                        }
-                                    });
+                                    error.setText("");
                                     String url = "https://soccer.payghost.co.za/login.inc.php";
                                     StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
                                         @Override
                                         public void onResponse(String response)
                                         {
-                                            Intent intent = new Intent(NewsFeedActivity.this,LeagueActivity.class);
-                                            dialog.dismiss();
-                                            startActivity(intent); //onclick takes you to LeagueActivity.java
+                                            if(response.equalsIgnoreCase("true"))
+                                            {
+                                                Intent intent = new Intent(NewsFeedActivity.this,LeagueActivity.class);
+                                                dialog.dismiss();
+                                                startActivity(intent); //onclick takes you to LeagueActivity.java
+                                            }
+                                            else
+                                            {
+                                                Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_out);
+                                                error.setText("Couldn't logged in. Please enter correct details");
+                                                progressBar.setVisibility(View.GONE);
+                                                progressBar.startAnimation(anim);
+                                            }
+
                                         }
                                     },new Response.ErrorListener(){
                                         @Override
@@ -139,8 +139,41 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                                         @Override
                                         protected Map<String, String> getParams(){
                                             Map<String,String> parameters = new HashMap<String, String>();
-                                            parameters.put("username",username.getText().toString());
-                                            parameters.put("password",password.getText().toString());
+                                            if(username.getText().toString().isEmpty())
+                                            {
+                                                usernameLayout.setError("Username is required *");
+
+                                            }
+                                            else
+                                            {
+                                                if(password.getText().toString().isEmpty())
+                                                {
+                                                    passwordLayout.setError("Password is required *");
+                                                }
+                                                else
+                                                {
+                                                    parameters.put("username",username.getText().toString());
+                                                    parameters.put("password",password.getText().toString());
+                                                    Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
+                                                    progressBar.startAnimation(anim);
+                                                    anim.setAnimationListener(new Animation.AnimationListener() {
+                                                        @Override
+                                                        public void onAnimationStart(Animation animation) {
+                                                            progressBar.setVisibility(View.VISIBLE);
+                                                        }
+
+                                                        @Override
+                                                        public void onAnimationEnd(Animation animation) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onAnimationRepeat(Animation animation) {
+
+                                                        }
+                                                    });
+                                                }
+                                            }
                                             return parameters;
                                         }
                                     };
@@ -169,7 +202,6 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                         });
                     }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -217,20 +249,33 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
             Button Submit= (Button)dialog.findViewById(R.id.btnSubmit);
             final EditText username= (EditText)dialog.findViewById(R.id.editUsername);
             final EditText password= (EditText)dialog.findViewById(R.id.editPassword);
-
+            final TextInputLayout usernameLayout,passwordLayout;
+            final TextView error = (TextView)dialog.findViewById(R.id.error);
+            usernameLayout = (TextInputLayout)dialog.findViewById(R.id.usernameInputLayout);
+            passwordLayout = (TextInputLayout)dialog.findViewById(R.id.passwordInputLayout);
+            progressBar = (ProgressBar)dialog.findViewById(R.id.progressBar);
             Submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.loading_anim);
-                    icon.startAnimation(anim);
+                    error.setText("");
                     String url = "https://soccer.payghost.co.za/login.inc.php";
                     StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
                         @Override
                         public void onResponse(String response)
                         {
-                            Intent intent = new Intent(dialog.getContext(),RegisterTeamActivity.class);
-                            startActivity(intent);
-                            dialog.dismiss();
+                            if(response.equalsIgnoreCase("true"))
+                            {
+                                Intent intent = new Intent(NewsFeedActivity.this,RegisterTeamActivity.class);
+                                dialog.dismiss();
+                                startActivity(intent); //onclick takes you to LeagueActivity.java
+                            }
+                            else
+                            {
+                                Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_out);
+                                error.setText("Couldn't logged in. Please enter correct details");
+                                progressBar.setVisibility(View.GONE);
+                                progressBar.startAnimation(anim);
+                            }
                         }
                     },new Response.ErrorListener(){
                         @Override
@@ -242,8 +287,52 @@ public class NewsFeedActivity extends AppCompatActivity  implements NavigationVi
                         @Override
                         protected Map<String, String> getParams(){
                             Map<String,String> parameters = new HashMap<String, String>();
-                            parameters.put("username",username.getText().toString());
-                            parameters.put("password",password.getText().toString());
+                            if(username.getText().toString().isEmpty() && password.getText().toString().isEmpty() )
+                            {
+
+                                usernameLayout.setError("Username is required *");
+                                passwordLayout.setError("Password is required *");
+                            }
+                            else
+                            {
+                                if(!username.getText().toString().isEmpty())
+                                {
+                                    if (!password.getText().toString().isEmpty())
+                                    {
+                                        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.zoom_in);
+                                        progressBar.startAnimation(anim);
+                                        anim.setAnimationListener(new Animation.AnimationListener() {
+                                            @Override
+                                            public void onAnimationStart(Animation animation) {
+                                                progressBar.setVisibility(View.VISIBLE);
+                                            }
+
+                                            @Override
+                                            public void onAnimationEnd(Animation animation) {
+
+                                            }
+
+                                            @Override
+                                            public void onAnimationRepeat(Animation animation) {
+
+                                            }
+                                        });
+                                        parameters.put("username",username.getText().toString());
+                                        parameters.put("password",password.getText().toString());
+                                    }
+                                    else
+                                    {
+                                        passwordLayout.setError("Password is required *");
+                                    }
+
+                                }
+                                else
+                                {
+                                    usernameLayout.setError("Username is required *");
+                                }
+                            }
+
+
                             return parameters;
                         }
                     };

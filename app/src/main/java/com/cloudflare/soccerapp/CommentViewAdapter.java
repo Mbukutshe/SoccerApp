@@ -36,9 +36,6 @@ public class CommentViewAdapter extends RecyclerView.Adapter<CommentViewHolder> 
         upAnim.reset();
         holder.itemView.clearAnimation();
         holder.itemView.setAnimation(upAnim);
-        upAnim = AnimationUtils.loadAnimation(context,R.anim.fromtop_translation);
-        holder.itemView.clearAnimation();
-        holder.itemView.startAnimation(upAnim);
 
        /* Context popup = new ContextThemeWrapper(context,R.style.popup);
         final PopupMenu optionsMenu = new PopupMenu(popup,options);

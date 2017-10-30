@@ -1,10 +1,13 @@
 package com.cloudflare.soccerapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,13 +38,15 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
 
     private int hour, minute,day,month,year;
     Button Submit, Date,Time;
-    String TeamA,TeamB,Stadium,date;
+    ImageView firstLogo,secondLogo;
+    String TeamA,TeamB,LogoA,LogoB,Stadium,date;
     AppCompatSpinner teama,teamb,stadium;
     Toolbar toolbar;
-    List<String> teams,stadiums;
+    List<String> teams,stadiums,logos;
     TimePicker timePicker;
     CalendarView calendarView;
-    private DatabaseReference mdatabaseRef,fixture,stadiumReference;
+
+    private DatabaseReference mdatabaseRef,fixture,stadiumReference,logoReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,9 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Match");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        firstLogo = (ImageView)findViewById(R.id.first_badge);
+        secondLogo = (ImageView)findViewById(R.id.second_badge);
 
         teama = (AppCompatSpinner)findViewById(R.id.teama);
         teamb = (AppCompatSpinner)findViewById(R.id.teamb);
@@ -64,6 +73,7 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
         stadiumReference = FirebaseDatabase.getInstance().getReference().child("Stadiums");
         teams= new ArrayList<String>();
         stadiums= new ArrayList<String>();
+        logos = new ArrayList<>();
         Submit.setOnClickListener(this);
 
         hour=timePicker.getCurrentHour();
@@ -110,6 +120,7 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
         teams.add("Team");
+        logos.add("team");
         getTeams();
         //team A Spinner
         ArrayAdapter<String> teamAadapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.dropdown_items,teams);
@@ -119,6 +130,17 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 TeamA = adapterView.getItemAtPosition(i).toString();
+                LogoA = logos.get(i);
+                if(i!=0)
+                {
+                    byte[] decodeImage = Base64.decode( logos.get(i), Base64.DEFAULT);
+                    Bitmap logo = BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
+                    firstLogo.setImageBitmap(logo);
+                }
+                else
+                {
+                    firstLogo.setImageResource(R.drawable.logo);
+                }
             }
 
             @Override
@@ -134,6 +156,17 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 TeamB = adapterView.getItemAtPosition(i).toString();
+                LogoB = logos.get(i);
+                if(i!=0)
+                {
+                    byte[] decodeImage = Base64.decode( logos.get(i), Base64.DEFAULT);
+                    Bitmap logo = BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
+                    secondLogo.setImageBitmap(logo);
+                }
+                else
+                {
+                   secondLogo.setImageResource(R.drawable.logo);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -176,6 +209,8 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
         Map<String,String> match = new HashMap<String,String>();
         match.put("TeamA",TeamA);
         match.put("TeamB",TeamB);
+        match.put("LogoA",LogoA);
+        match.put("LogoB",LogoB);
         match.put("Stadium",Stadium);
         match.put("Time",time);
         match.put("Date",date);
@@ -188,6 +223,7 @@ public class LeagueActivity extends AppCompatActivity implements  View.OnClickLi
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Teams team = dataSnapshot.getValue(Teams.class);
                 teams.add(team.Name);
+                logos.add(team.Logo);
             }
 
             @Override

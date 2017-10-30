@@ -139,6 +139,10 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
                 requestQueue.add(request);
                 */
+                try
+                {
+
+
                 final  String encodeImage = Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
                 teamName = editTeamName.getText().toString();
                 teamCaptain = editTeamCaptain.getText().toString();
@@ -149,8 +153,13 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
                 team.put("Captain",teamCaptain);
                 team.put("Chairman",teamChairman);
                 team.put("League",league);
-                mdatabaseRef.push().setValue(team);
+                mdatabaseRef.child(teamName).setValue(team);
                 Toast.makeText(getApplicationContext(),"Team Added",Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(),"Fields must'n be empty!",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -203,7 +212,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
             imageView.setImageBitmap(photo);
             //showing it on the image view widget
             bytes = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         }
         else
             if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK )
@@ -215,7 +224,7 @@ public class RegisterTeamActivity extends AppCompatActivity implements View.OnCl
 
                 Bitmap bitmap= ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
             }
     }
 

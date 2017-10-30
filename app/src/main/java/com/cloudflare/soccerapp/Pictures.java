@@ -68,27 +68,6 @@ public class Pictures extends Fragment {
                 post =dataSnapshot.getValue(Post.class);
                 byte[] decodeImage = Base64.decode( post.Picture, Base64.DEFAULT);
                 bitmap= BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
-/*
-                float scaleWidth = ((float) 0.5) ;
-                float scaleHeight = ((float) 0.5);
-
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                DisplayMetrics outMetrics = new DisplayMetrics();
-                display.getMetrics(outMetrics);
-                float pxWidth = outMetrics.widthPixels;
-                float screenWidth= pxWidth;
-                float newHeight = screenWidth;
-                if (bitmap.getWidth() != 0 && bitmap.getHeight() != 0) {
-                    newHeight = (screenWidth * bitmap.getHeight()) / bitmap.getWidth();
-                }
-                // create a matrix for the manipulation
-                Matrix matrix = new Matrix();
-
-                // resize the bit map
-                matrix.postScale(scaleWidth, scaleHeight);
-
-                // recreate the new Bitmap
-                bitmap = Bitmap.createScaledBitmap(bitmap,(int)screenWidth, (int)newHeight,true);*/
 
                 String key = dataSnapshot.getKey();
                 allItems.add(new ItemObject(bitmap,post.Title,key));
@@ -117,4 +96,5 @@ public class Pictures extends Fragment {
 
         });
     }
+
 }

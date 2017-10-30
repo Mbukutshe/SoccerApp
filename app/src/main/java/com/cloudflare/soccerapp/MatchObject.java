@@ -1,25 +1,35 @@
 package com.cloudflare.soccerapp;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Wiseman on 2017-04-30.
  */
 
 public class MatchObject {
-    private int firstBadge;
-    private int secondBadge;
+    private Bitmap firstBadge;
+    private Bitmap secondBadge;
     private String time;
     private String ground;
     private String firstTeam;
     private String secondTeam;
+    private String date;
 
-    public MatchObject(int firstBadge,int secondBadge,String time, String firstTeam,String secondTeam)
+    public MatchObject(Bitmap firstBadge,Bitmap secondBadge,String time,String date,String firstTeam,String secondTeam,String ground)
     {
         this.setFirstBadge(firstBadge);
         this.setSecondBadge(secondBadge);
         this.setTime(time);
+        this.setDate(date);
         this.setFirstTeam(firstTeam);
         this.setSecondTeam(secondTeam);
-
+        this.setGround(ground);
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
     public String getGround() {
         return ground;
@@ -53,19 +63,19 @@ public class MatchObject {
         this.secondTeam = secondTeam;
     }
 
-    public int getFirstBadge() {
+    public Bitmap getFirstBadge() {
         return firstBadge;
     }
 
-    public void setFirstBadge(int firstBadge) {
+    public void setFirstBadge(Bitmap firstBadge) {
         this.firstBadge = firstBadge;
     }
 
-    public int getSecondBadge() {
+    public Bitmap getSecondBadge() {
         return secondBadge;
     }
 
-    public void setSecondBadge(int secondBadge) {
+    public void setSecondBadge(Bitmap secondBadge) {
         this.secondBadge = secondBadge;
     }
 }

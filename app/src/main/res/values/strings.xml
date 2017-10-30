@@ -1,21 +1,6 @@
 <resources>
     <string name="app_name">Football Updates</string>
-    <string name="welcome">The Teams, battling it out to be the best.Register your team to be part of the the storm or just browse on the on going matches</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string-array name="Leagues">
         <item>Select a league...</item>
         <item>League1</item>
@@ -23,25 +8,10 @@
         <item>League3</item>
         <item>League4</item>
     </string-array>
-    <string-array name="Teams">
-        <item>Team</item>
-        <item>Team1</item>
-        <item>Team2</item>
-        <item>Team3</item>
-        <item>Team4</item>
-    </string-array>
-    <string-array name="Stadiums">
-        <item>Stadium</item>
-        <item>Stadium1</item>
-        <item>Stadium2</item>
-        <item>Stadium3</item>
-        <item>Stadium4</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">No Pictures</string>
     <string name="hello_blank_matches">No Matches</string>
-    <string name="sample_string">dadsas</string>
     <string name="post">Post a Comment</string>
     <string name="choose">Choose a logo</string>
     <string name="submit">Submit</string>
@@ -52,7 +22,9 @@
     <string name="chairman">Chairman</string>
     <string name="time">Match Starting Time :</string>
     <string name="date">Match Date :</string>
-    <string name="stadium">Stadium</string>
+    <string name="Time">Time :</string>
+    <string name="Date">Date :</string>
+    <string name="Stadium">Stadium :</string>
     <string name="vs">VS</string>
 
 </resources>

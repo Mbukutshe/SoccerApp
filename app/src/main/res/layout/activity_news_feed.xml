@@ -22,6 +22,7 @@
             android:elevation="6dp"
             app:tabMode="fixed"
             app:tabGravity="fill"/>
+
         <ProgressBar
             android:id="@+id/progressToolBar"
             android:theme="@style/LinearProgress"
@@ -30,11 +31,13 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"/>
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/camera"
         android:layout_width="wrap_content"
@@ -43,4 +46,5 @@
         android:layout_margin="16dp"
         android:background="@color/colorPrimary"
         app:srcCompat="@drawable/camera"/>
+
 </android.support.design.widget.CoordinatorLayout>

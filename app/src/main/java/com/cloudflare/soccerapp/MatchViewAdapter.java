@@ -34,28 +34,17 @@ public class MatchViewAdapter extends RecyclerView.Adapter<MatchViewHolder>{
     public void onBindViewHolder(final MatchViewHolder holder, final int position) {
         holder.firstTeam.setText(itemList.get(position).getFirstTeam());
         holder.secondTeam.setText(itemList.get(position).getSecondTeam());
-        holder.firstBadge.setImageResource(itemList.get(position).getFirstBadge());
-        holder.secondBadge.setImageResource(itemList.get(position).getSecondBadge());
+        holder.firstBadge.setImageBitmap(itemList.get(position).getFirstBadge());
+        holder.secondBadge.setImageBitmap(itemList.get(position).getSecondBadge());
+        holder.ground.setText(context.getResources().getString(R.string.Stadium)+itemList.get(position).getGround());
+        holder.time.setText(context.getResources().getString(R.string.Time)+itemList.get(position).getTime());
+        holder.date.setText(context.getResources().getString(R.string.Date)+itemList.get(position).getDate());
         final CardView cardView = (CardView)holder.itemView.findViewById(R.id.card_view);
         final Animation upAnim = AnimationUtils.loadAnimation(context,R.anim.fromtop_translation);
         final Animation Anim = AnimationUtils.loadAnimation(context,R.anim.alpha);
         upAnim.reset();
         cardView.startAnimation(Anim);
         holder.itemView.startAnimation(Anim);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v) {
-
-                return false;
-            }
-        });
     }
     @Override
     public int getItemCount() {

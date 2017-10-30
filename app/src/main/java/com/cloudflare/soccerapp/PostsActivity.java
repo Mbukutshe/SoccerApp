@@ -74,10 +74,12 @@ public class PostsActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView2);
         upload = (FloatingActionButton) findViewById(R.id.fab_send);
         title = (EditText)findViewById(R.id.title_image);
-      /*  String encodedImage = "";
+
+      /*String encodedImage = "";
         byte[] decodeImage = Base64.decode(encodedImage,Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImage,0,decodeImage.length);
         imageView.setImageBitmap(bitmap);*/
+
         cardView  = (CardView)findViewById(R.id.card_view);
         caption = (FrameLayout)findViewById(R.id.layout_caption);
         choose = (LinearLayout)findViewById(R.id.layout_choose);
@@ -245,7 +247,6 @@ public class PostsActivity extends AppCompatActivity {
                 .setColorFilter(Color.parseColor("#d5fd00"), PorterDuff.Mode.MULTIPLY);
 
 
-
         String url = "https://soccer.payghost.co.za/post.php";
         StringRequest request = new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
@@ -273,5 +274,4 @@ public class PostsActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(request);
     }
-
 }

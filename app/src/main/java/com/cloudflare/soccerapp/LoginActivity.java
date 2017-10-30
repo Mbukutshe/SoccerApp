@@ -1,6 +1,5 @@
 package com.cloudflare.soccerapp;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -16,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -39,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // CONNECTION_TIMEOUT and READ_TIMEOUT are in milliseconds
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
-    ImageView expandedImage;
+    TextView expandedImage;
     Button Submit, Cancel;
     EditText username, password,message;
     RequestQueue requestQueue;
@@ -66,10 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String title = getIntent().getExtras().get("Title").toString();
         key = getIntent().getExtras().get("key").toString();
         getSupportActionBar().setTitle(title );
+        toolbar.setTitle(title);
         mdatabaseRef = FirebaseDatabase.getInstance().getReference().child("Post");
-        expandedImage = (ImageView)findViewById(R.id.expandedImage);
-        Bitmap bitmap= getIntent().getParcelableExtra("Image");
-        expandedImage.setImageBitmap(bitmap);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_comment);
         mRecyclerView.setHasFixedSize(true);

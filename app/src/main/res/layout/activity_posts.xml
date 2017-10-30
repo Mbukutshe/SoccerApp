@@ -85,7 +85,6 @@
                     android:textColor="@color/colorPrimary"
                     android:text="Gallery"/>
             </FrameLayout>
-
         </LinearLayout>
         <FrameLayout
             android:visibility="gone"
